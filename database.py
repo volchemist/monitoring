@@ -3,6 +3,7 @@
 
 import sqlite3 as lite
 
+
 cache = []
 cache_size = 200
 
@@ -12,6 +13,7 @@ def save_tick_data(tstamp, symbol, field, value):
 	cache.append(observation)
 	if len(cache) >= cache_size:
 		flush_cache()
+
 
 def flush_cache():
 	try:
@@ -23,6 +25,7 @@ def flush_cache():
 	finally:
 		if con:
 			con.close()
+
 
 def get_securities():
 	data = None
