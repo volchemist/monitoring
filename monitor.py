@@ -71,8 +71,7 @@ if __name__ == '__main__':
         # flush database cache
         database.flush_cache()
         # disconnect from IB
-        con.cancelMktData(tickId)
-        sleep(1)
+        for tickId in symbol_by_tickid.keys():
+            con.cancelMktData(tickId)
         con.disconnect()
-        sleep(1)
 
