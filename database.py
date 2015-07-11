@@ -47,7 +47,8 @@ def get_subscriptions():
         con = lite.connect('../data/statics.sqlite')
         con.row_factory = lite.Row
         cur = con.cursor()
-        cur.execute('SELECT * FROM subscriptions WHERE symbol NOT IN (SELECT symbol FROM securities WHERE expiry < datetime())')
+        cur.execute('SELECT * FROM subscriptions WHERE symbol NOT IN '
+                    '(SELECT symbol FROM securities WHERE expiry < datetime())')
         data = cur.fetchall()
     finally:
         if con:
