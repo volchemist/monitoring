@@ -42,7 +42,7 @@ def create_contract(contract_tuple):
 if __name__ == '__main__':
 
     # determine which securities to subscribe to
-    securities = database.get_securities()
+    #securities = database.get_securities()
     subscription_data = database.get_subscriptions()
 
     try:

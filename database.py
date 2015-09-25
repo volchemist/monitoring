@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import sqlite3 as lite
+import pandas as pd
 
 
 cache = []
@@ -28,32 +29,32 @@ def flush_cache():
         if con:
             con.close()
 
+            
+def _convert_time(time):
+    try:
+        return unicode(time.strftime('%Y-%m-%d'))
+    except:
+        return u''
+            
 
 def get_securities():
-    data = None
-    try:
-        con = lite.connect('../data/statics.sqlite')
-        con.row_factory = lite.Row
-        cur = con.cursor()
-        cur.execute('SELECT * FROM securities')
-        data = cur.fetchall()
-    finally:
-        if con:
-            con.close()
-    return data
+    """
+    Returns a list of security definitions (each as a tuple of 
+    unicode values)
+    """
+    #df = pd.read_excel('statics.xls', 'securities')
+    #df['expiry'] = df['expiry'].map(_convert_time)
+    df = pd.read_csv('securities.csv', sep=';', dtype=unicode)
+    df = df.fillna(u'')
+    return df.to_dict('records')
 
 
 def get_subscriptions():
-    data = None
-    try:
-        con = lite.connect('../data/statics.sqlite')
-        con.row_factory = lite.Row
-        cur = con.cursor()
-        cur.execute('SELECT * FROM subscriptions WHERE symbol NOT IN '
-                    '(SELECT symbol FROM securities WHERE expiry < datetime())')
-        data = cur.fetchall()
-    finally:
-        if con:
-            con.close()
-    return data
-
+    """
+    Returns a list of subscription definitions (each as a tuple of 
+    unicode values)
+    """
+    #df = pd.read_excel('statics.xls', 'subscriptions')
+    df = pd.read_csv('subscriptions.csv', sep=';', dtype=unicode)
+    df = df.fillna(u'')
+    return df.to_dict('records')
