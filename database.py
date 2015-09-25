@@ -22,6 +22,8 @@ def flush_cache():
         cur.executemany("INSERT INTO intraday VALUES(?, ?, ?, ?)", cache)
         con.commit()
         del cache[:]
+    except lite.OperationalError:
+        print 'database locked. will retry to flush cache later.'
     finally:
         if con:
             con.close()
