@@ -22,7 +22,7 @@ def handle_details_end(msg):
     done =  True
 
 
-con = ibConnection()
+con = ibConnection(PORT=4001)
 con.registerAll(watcher)
 con.register(handle_details, 'ContractDetails')
 con.register(handle_details_end, 'ContractDetailsEnd')
