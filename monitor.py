@@ -28,7 +28,7 @@ def create_contract(contract_tuple):
     new_contract.m_exchange = str(contract_tuple['ib_exchange'])
     new_contract.m_currency = str(contract_tuple['ib_currency'])
     new_contract.m_strike = float(contract_tuple['ib_strike'])
-    #new_contract.m_tradingClass = str(contract_tuple['ib_trading_class'])
+    new_contract.m_tradingClass = str(contract_tuple['ib_trading_class'])
     if contract_tuple['ib_expiry']:
         new_contract.m_expiry = str(contract_tuple['ib_expiry'])     
     else:
