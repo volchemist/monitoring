@@ -18,11 +18,11 @@ def handle_details(msg):
 
 
 def handle_details_end(msg):
-    global DataWait
-    done =  True
+    global done
+    done = True
 
 
-con = ibConnection(PORT=4001)
+con = ibConnection(port=4001, clientId=321)
 con.registerAll(watcher)
 con.register(handle_details, 'ContractDetails')
 con.register(handle_details_end, 'ContractDetailsEnd')
@@ -35,12 +35,16 @@ contract.m_symbol = "VIX"
 contract.m_currency = "USD"
 
 con.reqContractDetails(1, contract)
-for _ in range(90):
+for _ in range(20):
     if done:
+        print 'all contracts received'
         break
     time.sleep(1)
-
+if not done:
+    print 'time out'
 con.disconnect()
 con.close()
 
-print contracts
+for c in contracts:
+    print c.m_symbol, c.m_secType, c.m_exchange, c.m_currency, c.m_strike, c.m_tradingClass
+
