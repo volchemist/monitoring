@@ -31,9 +31,9 @@ con.register(handle_details_end, 'ContractDetailsEnd')
 con.connect()
 
 contract = Contract()
-contract.m_exchange = "CBOE"
-contract.m_secType =  "IND"
-contract.m_symbol = "VIX"
+contract.m_exchange = "CME"
+contract.m_secType =  "FUT"
+contract.m_symbol = "SPX"
 contract.m_currency = "USD"
 
 con.reqContractDetails(1, contract)
