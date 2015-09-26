@@ -7,10 +7,9 @@ from ib.opt import ibConnection, message
 # global variables
 done = False
 contracts = []
-
-
-def watcher(msg):
-    print msg
+FIELDS = ('m_symbol', 'm_secType', 'm_exchange',
+          'm_currency', 'm_strike', 'm_tradingClass',
+          'm_expiry', 'm_right', 'm_conId')
 
 
 def handle_details(msg):
@@ -22,8 +21,11 @@ def handle_details_end(msg):
     done = True
 
 
+def print_contract(c):
+    print tuple(getattr(c, f) for f in FIELDS)
+
+
 con = ibConnection(port=4001, clientId=321)
-con.registerAll(watcher)
 con.register(handle_details, 'ContractDetails')
 con.register(handle_details_end, 'ContractDetailsEnd')
 con.connect()
@@ -45,6 +47,7 @@ if not done:
 con.disconnect()
 con.close()
 
+print FIELDS
 for c in contracts:
-    print c.m_symbol, c.m_secType, c.m_exchange, c.m_currency, c.m_strike, c.m_tradingClass
+    print_contract(c)
 
